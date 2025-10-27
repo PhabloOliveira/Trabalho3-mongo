@@ -11,40 +11,49 @@ exports.createLoan = async (req, res) => {
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: 'Usuário não encontrado' });
 
-        const book = await Book.findById(bookId);
-        if (!book) return res.status(404).json({ message: 'Livro não encontrado' });
+        // Verifica se o livro existe primeiro
+        const bookExists = await Book.findById(bookId);
+        if (!bookExists) return res.status(404).json({ message: 'Livro não encontrado' });
 
         const now = new Date();
-
-        // Regra 1 & 2: verificar disponibilidade
-        let canLoan = false;
-        if (book.isAvailable === true) {
-            canLoan = true;
-        } else if (book.expectedReturnDate && new Date(book.expectedReturnDate) < now) {
-            // expectedReturnDate anterior à data atual -> permitir
-            canLoan = true;
-        }
-
-        if (!canLoan) {
-            return res.status(400).json({ message: 'Livro não disponível para empréstimo', expectedReturnDate: book.expectedReturnDate });
-        }
-
-        // Criar loan: returnDate = now + 3 dias (salvar como ISO string conforme requisito)
         const returnDate = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
 
+        // Tentar atualizar o livro de forma atômica apenas se:
+        // - isAvailable === true OR
+        // - expectedReturnDate < now
+        // Isso evita condições de corrida onde dois pedidos tentam pegar o mesmo livro.
+        const updatedBook = await Book.findOneAndUpdate(
+            {
+                _id: bookId,
+                $or: [
+                    { isAvailable: true },
+                    { expectedReturnDate: { $lt: now } },
+                ],
+            },
+            {
+                $set: {
+                    isAvailable: false,
+                    expectedReturnDate: returnDate,
+                },
+            },
+            { new: true }
+        );
+
+        // Se updatedBook for null, significa que o livro não pôde ser reservado (está emprestado e previsão posterior)
+        if (!updatedBook) {
+            const currentBook = await Book.findById(bookId);
+            return res.status(400).json({ message: 'Livro não disponível para empréstimo', expectedReturnDate: currentBook ? currentBook.expectedReturnDate : null });
+        }
+
+        // Criar empréstimo com dados em string conforme schema existente
         const loanPayload = {
             user: user.name,
-            book: book.title,
+            book: updatedBook.title,
             loanDate: now.toISOString(),
             returnDate: returnDate.toISOString(),
         };
 
         const loan = await Loan.create(loanPayload);
-
-        // Atualizar status do livro
-        book.isAvailable = false;
-        book.expectedReturnDate = returnDate;
-        await book.save();
 
         return res.status(201).json(loan);
     } catch (error) {
