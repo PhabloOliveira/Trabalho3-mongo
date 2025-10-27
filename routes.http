@@ -3,10 +3,10 @@ POST http://localhost:3000/api/authors
 Content-Type: application/json
 
 {
-  "name": "Teste",
-  "birthDate": "2002-01-01",
+  "name": "Phablo",
+  "birthDate": "2002-08-14",
   "sex": "M",
-  "writingGenre": "Novel"
+  "writingGenre": "Mystery"
 }
 
 ###
@@ -22,10 +22,10 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-  "name": "Matheus Meigre",
-  "birthDate": "2001-11-24",
-  "sex": "M",
-  "address": "Rua das Flores, 456"
+  "name": "Roberta Ferreira",
+  "birthDate": "2007-05-15",
+  "sex": "F",
+  "address": "Rua da casa da Roberta, 123"
 }
 
 ###
@@ -39,10 +39,10 @@ POST http://localhost:3000/api/books
 Content-Type: application/json
 
 {
-  "title": "Livro Teste",
-  "synopsis": "Sinopse...",
-  "year": 2024,
-  "author": "<AUTHOR_ID>"
+  "title": "A volta dos que não foram",
+  "synopsis": "Se trata de um livro daqueles que nunca foram, mas que agora retornam para contar suas histórias.",
+  "year": 2025,
+  "author": "68ff6c11040d6d03f240fd41"
 }
 
 ###
@@ -57,8 +57,8 @@ POST http://localhost:3000/api/loans
 Content-Type: application/json
 
 {
-  "userId": "68ff6049151c49de98debefb",
-  "bookId": "68febbb4953d9dcdfa4e1589"
+  "userId": "68ff6c39040d6d03f240fd43",
+  "bookId": "68ff6c7b040d6d03f240fd47"
 }
 
 ###

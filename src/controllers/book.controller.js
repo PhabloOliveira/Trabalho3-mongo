@@ -41,29 +41,4 @@ exports.getBookById = async (req, res) => {
     }
 };
 
-// Atualiza um livro por ID. Se alterar author, verifica existência.
-exports.updateBook = async (req, res) => {
-    try {
-        if (req.body.author) {
-            const authorExists = await Author.findById(req.body.author);
-            if (!authorExists) return res.status(400).json({ message: 'Autor não encontrado' });
-        }
 
-        const book = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-        if (!book) return res.status(404).json({ message: 'Livro não encontrado' });
-        return res.status(200).json(book);
-    } catch (error) {
-        return res.status(400).json({ message: error.message });
-    }
-};
-
-// Remove um livro por ID
-exports.deleteBook = async (req, res) => {
-    try {
-        const book = await Book.findByIdAndDelete(req.params.id);
-        if (!book) return res.status(404).json({ message: 'Livro não encontrado' });
-        return res.status(204).send();
-    } catch (error) {
-        return res.status(500).json({ message: error.message });
-    }
-};

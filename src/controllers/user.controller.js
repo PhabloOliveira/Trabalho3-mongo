@@ -1,6 +1,6 @@
 const User = require('../models/user.model');
 
-// Create a new user
+// Cria novo usuario
 exports.createUser = async (req, res) => {
     try {
         const { name, birthDate, sex, address } = req.body;
@@ -12,7 +12,7 @@ exports.createUser = async (req, res) => {
     }
 };
 
-// Get all users
+// Pega todos os usuarios
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
@@ -22,12 +22,12 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
-// Get a user by ID
+// Pega um usuario pelo ID
 exports.getUserById = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'Usuario não encontrado' });
         }
         res.status(200).json(user);
     } catch (error) {
@@ -35,29 +35,5 @@ exports.getUserById = async (req, res) => {
     }
 };
 
-// Update a user by ID
-exports.updateUser = async (req, res) => {
-    try {
-        const { name, birthDate, sex, address } = req.body;
-        const user = await User.findByIdAndUpdate(req.params.id, { name, birthDate, sex, address }, { new: true });
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
 
-// Delete a user by ID
-exports.deleteUser = async (req, res) => {
-    try {
-        const user = await User.findByIdAndDelete(req.params.id);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        res.status(204).send();
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+

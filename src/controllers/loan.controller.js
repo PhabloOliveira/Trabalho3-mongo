@@ -64,7 +64,6 @@ exports.createLoan = async (req, res) => {
 // Lista todos os empréstimos
 exports.getAllLoans = async (req, res) => {
     try {
-        // Retorna os empréstimos com os campos string conforme o schema
         const loans = await Loan.find().sort({ createdAt: -1 });
         return res.status(200).json(loans);
     } catch (error) {

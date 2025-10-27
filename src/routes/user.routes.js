@@ -12,10 +12,4 @@ router.get('/', userController.getAllUsers);
 // Route para obter um usuário por ID
 router.get('/:id', userController.getUserById);
 
-// Route para atualizar um usuário por ID
-router.put('/:id', userController.updateUser);
-
-// Route para deletar um usuário por ID
-router.delete('/:id', userController.deleteUser);
-
 module.exports = router;
