@@ -15,22 +15,24 @@ GET http://localhost:3000/api/authors
 
 ###
 
+####################################################
+
 # Users
 POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-  "name": "Usuario Exemplo",
-  "birthDate": "1990-01-01",
-  "sex": "F",
-  "address": "Rua A, 123"
+  "name": "Matheus Meigre",
+  "birthDate": "2001-11-24",
+  "sex": "M",
+  "address": "Rua das Flores, 456"
 }
 
 ###
-
 GET http://localhost:3000/api/users
 
 ###
+################################################
 
 # Books
 POST http://localhost:3000/api/books
@@ -44,20 +46,23 @@ Content-Type: application/json
 }
 
 ###
-
 GET http://localhost:3000/api/books
 
-###
+##########################################################
 
 # Loans
 POST http://localhost:3000/api/loans
 Content-Type: application/json
 
 {
-  "userId": "<USER_ID>",
-  "bookId": "<BOOK_ID>"
+  "user": "Matheus Meigre",
+  "book": "Livro Seed",
+  "loanDate": "2025-10-27T12:34:56.789Z",
+  "returnDate": "2025-10-30T12:34:56.789Z"
 }
 
 ###
 
 GET http://localhost:3000/api/loans
+
+###

@@ -35,12 +35,12 @@ exports.getAuthorById = async (req, res) => {
     }
 };
 
-// Update an author by ID
+// Update do autor 
 exports.updateAuthor = async (req, res) => {
     try {
         const author = await Author.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!author) {
-            return res.status(404).json({ message: 'Author not found' });
+            return res.status(404).json({ message: 'Autor não encontrado' });
         }
         res.status(200).json(author);
     } catch (error) {

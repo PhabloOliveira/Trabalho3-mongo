@@ -1,30 +1,22 @@
 const mongoose = require('mongoose');
 
 // Schema para Empréstimos (Loans)
-// Armazena referência ao usuário e ao livro, além das datas de empréstimo e retorno
+// Campos obrigatórios conforme enunciado: user (String), book (String), loanDate (String), returnDate (String)
 const loanSchema = new mongoose.Schema({
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users',
-        required: true,
-    },
-    userName: {
         type: String,
+        required: true,
     },
     book: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Books',
+        type: String,
         required: true,
     },
-    bookTitle: {
-        type: String,
-    },
     loanDate: {
-        type: Date,
-        default: Date.now,
+        type: String,
+        required: true,
     },
     returnDate: {
-        type: Date,
+        type: String,
         required: true,
     },
 }, { timestamps: true });

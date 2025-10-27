@@ -29,17 +29,17 @@ exports.createLoan = async (req, res) => {
             return res.status(400).json({ message: 'Livro não disponível para empréstimo', expectedReturnDate: book.expectedReturnDate });
         }
 
-        // Criar loan: returnDate = now + 3 dias
+        // Criar loan: returnDate = now + 3 dias (salvar como ISO string conforme requisito)
         const returnDate = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
 
-        const loan = await Loan.create({
-            user: user._id,
-            userName: user.name,
-            book: book._id,
-            bookTitle: book.title,
-            loanDate: now,
-            returnDate,
-        });
+        const loanPayload = {
+            user: user.name,
+            book: book.title,
+            loanDate: now.toISOString(),
+            returnDate: returnDate.toISOString(),
+        };
+
+        const loan = await Loan.create(loanPayload);
 
         // Atualizar status do livro
         book.isAvailable = false;
@@ -55,7 +55,8 @@ exports.createLoan = async (req, res) => {
 // Lista todos os empréstimos
 exports.getAllLoans = async (req, res) => {
     try {
-        const loans = await Loan.find().populate('user').populate('book');
+        // Retorna os empréstimos com os campos string conforme o schema
+        const loans = await Loan.find().sort({ createdAt: -1 });
         return res.status(200).json(loans);
     } catch (error) {
         return res.status(500).json({ message: error.message });
