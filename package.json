@@ -1,0 +1,25 @@
+{
+  "name": "trabalho3-mongodb",
+  "version": "1.0.0",
+  "description": "API for managing authors and users in a MongoDB database using Fastify/Express.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "migrate": "npx migrate-mongo up",
+    "migrate-down": "npx migrate-mongo down",
+    "seed": "node scripts/seed.js"
+    ,"collections": "node scripts/collections.js"
+  },
+  "dependencies": {
+    "mongoose": "^6.0.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.0",
+    "migrate-mongo": "^9.0.0"
+  },
+  "author": "Seu Nome",
+  "license": "ISC"
+}
