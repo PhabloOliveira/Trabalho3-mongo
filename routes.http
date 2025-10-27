@@ -51,18 +51,19 @@ GET http://localhost:3000/api/books
 ##########################################################
 
 # Loans
+### Realizar Empréstimo (POST)
+# Substitua <USER_ID> e <BOOK_ID> pelos IDs reais retornados pelas rotas de Users/Books
 POST http://localhost:3000/api/loans
 Content-Type: application/json
 
 {
-  "user": "Matheus Meigre",
-  "book": "Livro Seed",
-  "loanDate": "2025-10-27T12:34:56.789Z",
-  "returnDate": "2025-10-30T12:34:56.789Z"
+  "userId": "68ff6049151c49de98debefb",
+  "bookId": "68febbb4953d9dcdfa4e1589"
 }
 
 ###
 
+### Listar Empréstimos (GET)
 GET http://localhost:3000/api/loans
 
 ###
